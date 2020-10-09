@@ -65,9 +65,8 @@ class FrontendUtility
             if ($arguments['sort']) {
                 $underlyingQuery['sort'] = $arguments['sort'];
             }
-            $scriptTag->setContent('var underlyingQuery = '.json_encode($underlyingQuery).';');
 
-            return $scriptTag->render();
+            return json_encode($underlyingQuery);
         }
 
         return '';
@@ -78,7 +77,7 @@ class FrontendUtility
      *
      * @return array
      */
-    public static function getIndexes($underlyingQueryInfo)
+    public static function getIndexes($underlyingQueryInfo): array
     {
         // These indexes are 0-based for Solr & PHP. The user visible numbering is 1-based.
         $index = [];

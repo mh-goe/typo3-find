@@ -97,15 +97,11 @@ class SearchController extends ActionController
             $this->forward('detail');
         } else {
             $this->searchProvider->setCounter();
-            $this->response->addAdditionalHeaderData(
-                FrontendUtility::addQueryInformationAsJavaScript(
-                    $this->searchProvider->getRequestArguments()['q'],
-                    $this->settings,
-                    null,
-                    $this->searchProvider->getRequestArguments()
-                ),
-            false,
-            true
+            $underlyingQuery = FrontendUtility::addQueryInformationAsJavaScript(
+                $this->searchProvider->getRequestArguments()['q'],
+                $this->settings,
+                null,
+                $this->searchProvider->getRequestArguments()
             );
 
             $this->addStandardAssignments();
@@ -113,6 +109,7 @@ class SearchController extends ActionController
 
             $viewValues = [
                 'arguments' => $this->searchProvider->getRequestArguments(),
+                'underlyingQuery' => $underlyingQuery,
                 'config' => $this->searchProvider->getConfiguration(),
             ];
 
